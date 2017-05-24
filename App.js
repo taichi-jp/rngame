@@ -1,6 +1,7 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { AppRegistry, StyleSheet, Text, View, TouchableHighlight } from 'react-native';
-import Box from './Box'
+import Box from './components/Box'
+import RetryButton from './components/RetryButton'
 
 export default class Game extends Component {
   constructor(props) {
@@ -13,54 +14,63 @@ export default class Game extends Component {
 
   componentDidUpdate() {
     console.log(this.state.data);
-    console.log(this.state.gameover);
     let tmp = { ...this.state.data };
-    if(!tmp.box1 && !tmp.box2 && !tmp.box3 && !tmp.box4 && !tmp.box5 && !tmp.box6 && !tmp.box7 && !tmp.box8 &&
-    !tmp.box9 && !tmp.box10 && !tmp.box11 && !tmp.box12 && !tmp.box13 && !tmp.box14 && !tmp.box15 && !tmp.box16 && !this.state.gameover) {
+    let go = !tmp.box1 && !tmp.box2 && !tmp.box3 && !tmp.box4 && !tmp.box5 && !tmp.box6 && !tmp.box7 && !tmp.box8 &&
+      !tmp.box9 && !tmp.box10 && !tmp.box11 && !tmp.box12 && !tmp.box13 && !tmp.box14 && !tmp.box15 && !tmp.box16 && !this.state.gameover;
+    if(go) {
       this.setState({
-        data: initialData,
+        data: tmp,
         gameover: true,
       });
     }
   }
 
-  _onPress(num) {
+  _onPress(id) {
     let tmp = { ...this.state.data };
-    idx = 'box' + num.toString();
-    tmp[idx] = false;
+    tmp[id] = false;
     this.setState({
       data: tmp,
+      gameover: false,
     });
+  }
+
+  _onRetry() {
+    this.setState({
+      data: initialData,
+      gameover: false,
+    })
   }
 
   render() {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box1 && <TouchableHighlight onPress={ () => this._onPress(1)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box2 && <TouchableHighlight onPress={ () => this._onPress(2)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box3 && <TouchableHighlight onPress={ () => this._onPress(3)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box4 && <TouchableHighlight onPress={ () => this._onPress(4)} ><View style={styles.box2}/></TouchableHighlight>}</View>
+          <View style={styles.box}>{this.state.data.box1 && <Box boxId='box1' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box2 && <Box boxId='box2' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box3 && <Box boxId='box3' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box4 && <Box boxId='box4' onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box5 && <TouchableHighlight onPress={ () => this._onPress(5)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box6 && <TouchableHighlight onPress={ () => this._onPress(6)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box7 && <TouchableHighlight onPress={ () => this._onPress(7)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box8 && <TouchableHighlight onPress={ () => this._onPress(8)} ><View style={styles.box2}/></TouchableHighlight>}</View>
+          <View style={styles.box}>{this.state.data.box5 && <Box boxId='box5' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box6 && <Box boxId='box6' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box7 && <Box boxId='box7' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box8 && <Box boxId='box8' onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box9 && <TouchableHighlight onPress={ () => this._onPress(9)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box10 && <TouchableHighlight onPress={ () => this._onPress(10)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box11 && <TouchableHighlight onPress={ () => this._onPress(11)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box12 && <TouchableHighlight onPress={ () => this._onPress(12)} ><View style={styles.box2}/></TouchableHighlight>}</View>
+          <View style={styles.box}>{this.state.data.box9 && <Box boxId='box9' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box10 && <Box boxId='box10' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box11 && <Box boxId='box11' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box12 && <Box boxId='box12' onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box13 && <TouchableHighlight onPress={ () => this._onPress(13)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box14 && <TouchableHighlight onPress={ () => this._onPress(14)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box15 && <TouchableHighlight onPress={ () => this._onPress(15)} ><View style={styles.box2}/></TouchableHighlight>}</View>
-          <View style={styles.box}>{this.state.data.box16 && <TouchableHighlight onPress={ () => this._onPress(16)} ><View style={styles.box2}/></TouchableHighlight>}</View>
+          <View style={styles.box}>{this.state.data.box13 && <Box boxId='box13' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box14 && <Box boxId='box14' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box15 && <Box boxId='box15' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box16 && <Box boxId='box16' onPressed={this._onPress.bind(this)} />}</View>
         </View>
-        <View style={styles.button}>{this.state.gameover && <Text style={styles.retry}>Retry!</Text>}</View>
+        <View style={styles.button}>
+          {this.state.gameover && <RetryButton onPressed={this._onRetry.bind(this)} />}
+        </View>
       </View>
     );
   }
@@ -86,22 +96,12 @@ const styles = StyleSheet.create({
     justifyContent:'center',
     backgroundColor: 'steelblue',
   },
-  box2: {
-    width: 60,
-    height: 60,
-    backgroundColor: 'powderblue',
-  },
   button: {
     width: 200,
     height: 70,
     alignSelf: 'center',
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor: 'skyblue',
-  },
-  retry: {
-    fontSize: 40,
-    fontWeight: 'bold',
   },
 });
 
