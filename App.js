@@ -6,38 +6,45 @@ import RetryButton from './components/RetryButton'
 export default class Game extends Component {
   constructor(props) {
     super(props);
+    let rand = "box" + (Math.floor( Math.random() * 16 ) + 1).toString() ;
     this.state = {
       data: initialData,
       gameover: false,
+      miss: rand,
     };
   }
 
   componentDidUpdate() {
     console.log(this.state.data);
-    let tmp = { ...this.state.data };
-    let go = !tmp.box1 && !tmp.box2 && !tmp.box3 && !tmp.box4 && !tmp.box5 && !tmp.box6 && !tmp.box7 && !tmp.box8 &&
-      !tmp.box9 && !tmp.box10 && !tmp.box11 && !tmp.box12 && !tmp.box13 && !tmp.box14 && !tmp.box15 && !tmp.box16 && !this.state.gameover;
-    if(go) {
-      this.setState({
-        data: tmp,
-        gameover: true,
-      });
-    }
+    console.log(this.state.miss);
   }
 
   _onPress(id) {
     let tmp = { ...this.state.data };
-    tmp[id] = false;
-    this.setState({
-      data: tmp,
-      gameover: false,
-    });
+    if(id === this.state.miss) {
+      for(let i = 1; i <= 16; i++){
+        let boxid = "box" + i.toString();
+        tmp[boxid] = false;
+      }
+      tmp[id] = true;
+      this.setState({
+        data: tmp,
+        gameover: true,
+      });
+    } else {
+      tmp[id] = false;
+      this.setState({
+        data: tmp,
+        gameover: false,
+      });
+    }
   }
 
   _onRetry() {
     this.setState({
       data: initialData,
       gameover: false,
+      miss: "box" + (Math.floor( Math.random() * 16 ) + 1).toString(),
     })
   }
 
@@ -45,28 +52,28 @@ export default class Game extends Component {
     return (
       <View style={styles.container}>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box1 && <Box boxId='box1' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box2 && <Box boxId='box2' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box3 && <Box boxId='box3' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box4 && <Box boxId='box4' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box1 && <Box boxId='box1' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box2 && <Box boxId='box2' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box3 && <Box boxId='box3' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box4 && <Box boxId='box4' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box5 && <Box boxId='box5' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box6 && <Box boxId='box6' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box7 && <Box boxId='box7' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box8 && <Box boxId='box8' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box5 && <Box boxId='box5' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box6 && <Box boxId='box6' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box7 && <Box boxId='box7' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box8 && <Box boxId='box8' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box9 && <Box boxId='box9' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box10 && <Box boxId='box10' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box11 && <Box boxId='box11' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box12 && <Box boxId='box12' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box9 && <Box boxId='box9' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box10 && <Box boxId='box10' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box11 && <Box boxId='box11' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box12 && <Box boxId='box12' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.row}>
-          <View style={styles.box}>{this.state.data.box13 && <Box boxId='box13' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box14 && <Box boxId='box14' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box15 && <Box boxId='box15' onPressed={this._onPress.bind(this)} />}</View>
-          <View style={styles.box}>{this.state.data.box16 && <Box boxId='box16' onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box13 && <Box boxId='box13' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box14 && <Box boxId='box14' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box15 && <Box boxId='box15' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
+          <View style={styles.box}>{this.state.data.box16 && <Box boxId='box16' missId={this.state.miss} onPressed={this._onPress.bind(this)} />}</View>
         </View>
         <View style={styles.button}>
           {this.state.gameover && <RetryButton onPressed={this._onRetry.bind(this)} />}
@@ -94,7 +101,7 @@ const styles = StyleSheet.create({
     height: 65,
     alignItems:'center',
     justifyContent:'center',
-    backgroundColor: 'steelblue',
+    // backgroundColor: 'steelblue',
   },
   button: {
     width: 200,
